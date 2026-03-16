@@ -1,36 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const AboutContainer = styled.div`
-  background: white;
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  max-width: 600px;
-  margin: 0 auto; /* Центрування по горизонталі */
-`;
-
-const Heading = styled.h2`
-  color: #333;
-  border-bottom: 2px solid #61dafb;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-`;
-
-const Text = styled.p`
-  color: #555;
-  line-height: 1.6;
-  font-size: 1.1rem;
-`;
+import { Container } from 'react-bootstrap';
 
 function About() {
   return (
-    <AboutContainer>
-      <Heading>Про нас</Heading>
-      <Text>
-        Ми вивчаємо React та маршрутизацію! 
-      </Text>
-    </AboutContainer>
+    <Container>
+      <div className="bg-white p-5 rounded-4 shadow-sm mx-auto mt-4" style={{ maxWidth: '600px' }}>
+        <h2 className="text-dark border-bottom border-info border-2 pb-2 mb-4">Про нас</h2>
+        <p className="text-secondary fs-5" style={{ lineHeight: 1.6 }}>
+          Ми вивчаємо React та маршрутизацію! 
+        </p>
+      </div>
+    </Container>
   );
 }
 

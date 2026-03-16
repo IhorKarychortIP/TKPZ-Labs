@@ -1,61 +1,5 @@
 import React, { useState } from 'react';
 import { Card, Button, Badge, Container, Row, Col, Modal } from 'react-bootstrap';
-import styled from 'styled-components';
-
-const PatientWrapper = styled.div`
-  padding: 20px 0;
-`;
-
-const StyledCard = styled(Card)`
-  border: none;
-  border-radius: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 10px 30px rgba(32, 201, 151, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(32, 201, 151, 0.3);
-  }
-`;
-
-const ClinicButton = styled(Button)`
-  border-radius: 25px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  padding: 10px 20px;
-  border-color: #20c997;
-  color: #20c997;
-  background-color: transparent;
-  transition: all 0.3s ease;
-
-  &:hover, &:active, &:focus {
-    background-color: #20c997 !important;
-    border-color: #20c997 !important;
-    color: white !important;
-    box-shadow: 0 4px 10px rgba(32, 201, 151, 0.4) !important;
-  }
-`;
-
-const CustomBadge = styled(Badge)`
-  font-size: 0.85em;
-  padding: 8px 12px;
-  border-radius: 10px;
-`;
-
-const StyledModal = styled(Modal)`
-  .modal-content {
-    border-radius: 15px;
-    border: none;
-  }
-  .modal-header {
-    background-color: #20c997;
-    color: white;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-  }
-`;
 
 const patientsData = [
   { id: "4815162342", name: "Олександр Петренко", doctor: "д-р Коваленко", date: "20 лютого 2026", status: "Здоровий", type: "Плановий огляд", details: "Скарг немає. Тиск 120/80. Наступний огляд через рік." },
@@ -67,6 +11,7 @@ const patientsData = [
 function PatientCard() {
   const [showModal, setShowModal] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   const handleShow = (patient) => {
     setSelectedPatient(patient);
@@ -79,13 +24,18 @@ function PatientCard() {
   };
 
   return (
-    <PatientWrapper>
+    <div className="py-4">
       <Container>
-        <h2 className="mb-4 text-start fw-bold" style={{ color: '#282c34' }}>База пацієнтів</h2>
+        <h2 className="mb-4 text-start fw-bold text-dark">База пацієнтів</h2>
         <Row className="g-4">
           {patientsData.map((patient, index) => (
             <Col xs={12} md={6} lg={4} key={index}>
-              <StyledCard>
+              <Card 
+                className={`h-100 border-2 rounded-4 ${hoveredCard === patient.id ? 'border-success shadow' : 'border-light shadow-sm'}`}
+                onMouseEnter={() => setHoveredCard(patient.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+                style={{ transition: 'all 0.3s ease' }}
+              >
                 <Card.Body className="p-4 d-flex flex-column">
                   <Card.Title className="fs-4 fw-bold text-dark mb-1">{patient.name}</Card.Title>
                   <Card.Subtitle className="mb-4 text-muted">ID: #{patient.id}</Card.Subtitle>
@@ -94,40 +44,46 @@ function PatientCard() {
                     <strong>Лікуючий лікар:</strong> {patient.doctor}
                   </Card.Text>
                   <div className="mb-4 mt-3">
-                    <CustomBadge bg={patient.status === "Здоровий" ? "success" : "warning"} className="me-2">
+                    <Badge bg={patient.status === "Здоровий" ? "success" : "warning"} className="me-2 px-3 py-2 rounded-pill text-white" style={{ fontSize: '0.85em' }}>
                       {patient.status}
-                    </CustomBadge>
-                    <CustomBadge bg="info">{patient.type}</CustomBadge>
+                    </Badge>
+                    <Badge bg="info" className="px-3 py-2 rounded-pill text-white" style={{ fontSize: '0.85em' }}>
+                      {patient.type}
+                    </Badge>
                   </div>
-                  <ClinicButton className="w-100 mt-auto" onClick={() => handleShow(patient)}>
+                  <Button 
+                    variant={selectedPatient?.id === patient.id ? "success" : "outline-success"}
+                    className="w-100 mt-auto rounded-pill fw-bold py-2" 
+                    onClick={() => handleShow(patient)}
+                  >
                     Переглянути медичну карту
-                  </ClinicButton>
+                  </Button>
                 </Card.Body>
-              </StyledCard>
+              </Card>
             </Col>
           ))}
         </Row>
 
-        <StyledModal show={showModal} onHide={handleClose} centered>
-          <Modal.Header closeButton closeVariant="white">
+        <Modal show={showModal} onHide={handleClose} centered contentClassName="border-0 rounded-4 shadow-lg overflow-hidden">
+          <Modal.Header closeButton closeVariant="white" className="bg-success text-white border-0">
             <Modal.Title>Медична карта: {selectedPatient?.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body className="p-4 lh-lg">
-            <p><strong>ID пацієнта:</strong> {selectedPatient?.id}</p>
-            <p><strong>Лікуючий лікар:</strong> {selectedPatient?.doctor}</p>
-            <p><strong>Дата візиту:</strong> {selectedPatient?.date}</p>
-            <hr />
-            <p><strong>Висновок лікаря:</strong></p>
-            <p>{selectedPatient?.details}</p>
+            <p className="mb-2"><strong>ID пацієнта:</strong> {selectedPatient?.id}</p>
+            <p className="mb-2"><strong>Лікуючий лікар:</strong> {selectedPatient?.doctor}</p>
+            <p className="mb-3"><strong>Дата візиту:</strong> {selectedPatient?.date}</p>
+            <hr className="text-muted" />
+            <p className="mb-2"><strong>Висновок лікаря:</strong></p>
+            <p className="mb-0">{selectedPatient?.details}</p>
           </Modal.Body>
-          <Modal.Footer className="border-top-0 pb-4 pe-4">
-            <Button variant="secondary" onClick={handleClose} style={{ borderRadius: '25px' }}>
+          <Modal.Footer className="border-2 pb-4 pe-4">
+            <Button variant="secondary" onClick={handleClose} className="rounded-pill px-4 py-2">
               Закрити
             </Button>
           </Modal.Footer>
-        </StyledModal>
+        </Modal>
       </Container>
-    </PatientWrapper>
+    </div>
   );
 }
 
