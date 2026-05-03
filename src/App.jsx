@@ -6,29 +6,24 @@ import './App.css';
 
 import Hello from './components/Hello';
 import Goodbye from './components/Goodbye';
-import About from './components/About';
 import Menu from './components/Menu';
-import PatientCard from './components/PatientCard';
-import DoctorsList from './components/DoctorsList';
-import TodoPage from './components/TodoPage'; 
+
+import About from './pages/About';
+import PatientCard from './pages/PatientCard';
+import DoctorsPage from './pages/DoctorsPage';
+import TodoPage from './pages/TodoPage';
+import AppointmentsPage from './pages/AppointmentsPage';
 
 function Home() {
   const [isHello, setIsHello] = useState(true);
-
-  const toggleMessage = () => {
-    setIsHello(!isHello); 
-  };
+  const toggleMessage = () => setIsHello(!isHello); 
 
   return (
     <Container>
       <Row className="justify-content-center">
         <Col xs={12} md={8} lg={6} className="text-center">
           {isHello ? <Hello /> : <Goodbye />}
-          <Button 
-            variant={isHello ? "danger" : "success"} 
-            className="px-4 py-2 mt-4 fw-bold shadow-sm rounded-3"
-            onClick={toggleMessage}
-          >
+          <Button variant={isHello ? "danger" : "success"} className="px-4 py-2 mt-4 fw-bold shadow-sm rounded-3" onClick={toggleMessage}>
             {isHello ? "Попрощатися" : "Привітатися знову"}
           </Button>
         </Col>
@@ -50,9 +45,10 @@ function App() {
               <Nav className="me-auto gap-3">
                 <Nav.Link as={Link} to="/" className="text-white fw-semibold">Головна</Nav.Link>
                 <Nav.Link as={Link} to="/about" className="text-white fw-semibold">Про нас</Nav.Link>
-                <Nav.Link as={Link} to="/patient" className="text-white fw-semibold">Кабінет пацієнта</Nav.Link>
-                <Nav.Link as={Link} to="/doctors" className="text-white fw-semibold">Наші лікарі</Nav.Link>
+                <Nav.Link as={Link} to="/patient" className="text-white fw-semibold">Кабінет</Nav.Link>
+                <Nav.Link as={Link} to="/doctors" className="text-white fw-semibold">Лікарі</Nav.Link>
                 <Nav.Link as={Link} to="/tasks" className="text-white fw-semibold">Завдання</Nav.Link>
+                <Nav.Link as={Link} to="/appointments" className="text-warning fw-bold">Мої записи</Nav.Link>
               </Nav>
               <Menu />
             </Navbar.Collapse>
@@ -64,11 +60,11 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/patient" element={<PatientCard />} />
-            <Route path="/doctors" element={<DoctorsList />} />
+            <Route path="/doctors" element={<DoctorsPage />} />
             <Route path="/tasks" element={<TodoPage />} />
+            <Route path="/appointments" element={<AppointmentsPage />} />
           </Routes>
         </div>
-        
       </div>
     </Router>
   );

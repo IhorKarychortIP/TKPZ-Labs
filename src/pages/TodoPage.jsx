@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, ButtonGroup, Button, Card } from 'react-bootstrap';
-import TaskForm from './TaskForm';
-import TaskList from './TaskList';
+import TaskForm from '../components/TaskForm';
+import TaskList from '../components/TaskList';
 
 function TodoPage() {
   const [tasks, setTasks] = useState(() => {
