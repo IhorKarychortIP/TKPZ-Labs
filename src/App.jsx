@@ -9,7 +9,8 @@ import Goodbye from './components/Goodbye';
 import About from './components/About';
 import Menu from './components/Menu';
 import PatientCard from './components/PatientCard';
-import DoctorsList from './components/DoctorsList'; 
+import DoctorsList from './components/DoctorsList';
+import TodoPage from './components/TodoPage'; 
 
 function Home() {
   const [isHello, setIsHello] = useState(true);
@@ -51,6 +52,7 @@ function App() {
                 <Nav.Link as={Link} to="/about" className="text-white fw-semibold">Про нас</Nav.Link>
                 <Nav.Link as={Link} to="/patient" className="text-white fw-semibold">Кабінет пацієнта</Nav.Link>
                 <Nav.Link as={Link} to="/doctors" className="text-white fw-semibold">Наші лікарі</Nav.Link>
+                <Nav.Link as={Link} to="/tasks" className="text-white fw-semibold">Завдання</Nav.Link>
               </Nav>
               <Menu />
             </Navbar.Collapse>
@@ -63,6 +65,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/patient" element={<PatientCard />} />
             <Route path="/doctors" element={<DoctorsList />} />
+            <Route path="/tasks" element={<TodoPage />} />
           </Routes>
         </div>
         
