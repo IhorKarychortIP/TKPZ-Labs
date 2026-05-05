@@ -11,6 +11,13 @@ import Menu from './components/Menu';
 import PatientCard from './components/PatientCard';
 import DoctorsList from './components/DoctorsList'; 
 
+const doctorsData = [
+  { id: 1, name: "Олександр Коваленко", specialty: "Терапевт", experience: 15, price: 450, imgurl: "/imgs/doctors/doc1.jpg" },
+  { id: 2, name: "Марія Лисенко", specialty: "Кардіолог", experience: 10, price: 600, imgurl: "/imgs/doctors/doc2.jpg" },
+  { id: 3, name: "Іван Мельник", specialty: "Педіатр", experience: 8, price: 500, imgurl: "/imgs/doctors/doc3.jpg" },
+  { id: 4, name: "Олена Ткачук", specialty: "Невролог", experience: 12, price: 550, imgurl: "/imgs/doctors/doc4.jpg" }
+];
+
 function Home() {
   const [isHello, setIsHello] = useState(true);
 
@@ -62,7 +69,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/patient" element={<PatientCard />} />
-            <Route path="/doctors" element={<DoctorsList />} />
+            <Route path="/doctors" element={<DoctorsList doctors={doctorsData}/>} />
           </Routes>
         </div>
         
